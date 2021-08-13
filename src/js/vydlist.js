@@ -6,7 +6,11 @@ const app = (function () {
 
   function createVideoElement(videoInfo) {
     if (videoInfo.site === "youtube") {
-      return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoInfo.id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      return `<iframe class="playlist-iframe" src="https://www.youtube.com/embed/${videoInfo.id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
+
+    if (videoInfo.site === "vimeo") {
+      return `<iframe src="https://player.vimeo.com/video/${videoInfo.id}" class="playlist-iframe" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     }
   }
 
@@ -27,6 +31,8 @@ const app = (function () {
       link: "",
     };
 
+    let videoEl = "";
+
     if (videoLink.includes("youtube")) {
       videoInfo = {
         id: videoLink.slice(videoLink.indexOf("v=") + 2),
@@ -38,14 +44,20 @@ const app = (function () {
       };
     }
 
-    return ` <div
-    class="playlist-video jsPlaylistVideo"
-    data-id=${videoInfo.id}
-    data-img=${videoInfo.img}
-    data-site=${videoInfo.site}
-    data-link=${videoInfo.link}
-    style="background-image: url(${videoInfo.img})"
-  ></div>`;
+    if (videoLink.includes("vimeo")) {
+      videoInfo = {
+        id: videoLink.slice(videoLink.indexOf(".com/") + 5),
+        site: "vimeo",
+        link: videoLink,
+      };
+    }
+
+    videoEl = createVideoElement(videoInfo);
+
+    return `<div class="playlist-item" data-id=${videoInfo.id} data-site=${videoInfo.site} data-link=${videoInfo.link}>
+    <div class="playlist-item-overlay"></div>
+        ${videoEl}
+    </div>`;
   }
 
   function addVideo(e) {
