@@ -5,6 +5,7 @@ const app = (function () {
   let playlistArea = document.querySelector(".jsPlaylistArea");
 
   function createVideoElement(videoInfo) {
+    console.log("createVideoElement");
     if (videoInfo.site === "youtube") {
       return `<iframe class="playlist-iframe" src="https://www.youtube.com/embed/${videoInfo.id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
     }
@@ -20,7 +21,8 @@ const app = (function () {
       id: selectedVideo.dataset.id,
       site: selectedVideo.dataset.site,
     });
-    videoArea.innerHTML += el;
+    videoArea.innerHTML = el;
+    console.log(el);
   }
 
   function createVideoListItem(videoLink) {
@@ -30,8 +32,6 @@ const app = (function () {
       site: "",
       link: "",
     };
-
-    let videoEl = "";
 
     if (videoLink.includes("youtube")) {
       videoInfo = {
@@ -52,12 +52,18 @@ const app = (function () {
       };
     }
 
-    videoEl = createVideoElement(videoInfo);
+    let videoEl = document.createElement("div");
+    videoEl.classList.add("playlist-item");
+    videoEl.setAttribute("data-id", videoInfo.id);
+    videoEl.setAttribute("data-site", videoInfo.site);
+    videoEl.setAttribute("data-link", videoInfo.link);
 
-    return `<div class="playlist-item" data-id=${videoInfo.id} data-site=${videoInfo.site} data-link=${videoInfo.link}>
-    <div class="playlist-item-overlay"></div>
-        ${videoEl}
-    </div>`;
+    videoEl.innerHTML = `<div class="playlist-item-overlay"></div>${createVideoElement(
+      videoInfo
+    )};`;
+    videoEl.addEventListener("click", selectActiveVideo);
+
+    return videoEl;
   }
 
   function addVideo(e) {
@@ -68,11 +74,7 @@ const app = (function () {
 
     const videoListItem = createVideoListItem(addInput.value);
 
-    playlistArea.innerHTML += videoListItem;
-
-    document
-      .querySelector(`[data-link="${addInput.value}"]`)
-      .addEventListener("click", selectActiveVideo);
+    playlistArea.appendChild(videoListItem);
   }
 
   addForm.addEventListener("submit", addVideo);
