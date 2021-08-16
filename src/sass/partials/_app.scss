@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $dark;
+  color: $light;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 50px auto 300px;
+  grid-template-rows: 100px auto auto;
+  grid-template-areas:
+    "sidebar header header "
+    "sidebar main aside"
+    "sidebar info aside";
+}
+
+.sidebar {
+  grid-area: sidebar;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+header {
+  grid-area: header;
+}
+
+.video-area {
+  grid-area: main;
+}
+
+.playlist-area {
+  grid-area: aside;
+}
+
+.info-area {
+  grid-area: info;
+}
