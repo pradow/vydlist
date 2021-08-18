@@ -14,7 +14,7 @@ body {
   grid-template-columns: 50px auto 300px;
   grid-template-rows: 100px auto auto;
   grid-template-areas:
-    "sidebar header header "
+    "header header header "
     "sidebar main aside"
     "sidebar info aside";
 }
