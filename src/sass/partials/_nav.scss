@@ -1,4 +1,26 @@
+.main-header-inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.logo {
+  align-items: center;
+  background-color: $purple;
+  border-radius: 50%;
+  display: flex;
+  font-family: "Monoton", cursive;
+  font-size: 25px;
+  height: 50px;
+  justify-content: center;
+  padding: 10px;
+  width: 50px;
+}
+
 .nav-form {
+  align-items: center;
+  justify-content: center;
+  display: flex;
   position: relative;
 }
 
@@ -9,7 +31,7 @@
   z-index: 1;
   font-size: 2;
   font-size: 15px;
-  color: blueviolet;
+  color: $light;
   background-color: #000;
 }
 
@@ -18,9 +40,15 @@
   border: 1px solid $light;
   border-radius: 10px;
   color: $light;
-  padding: 10px;
+  min-width: 400px;
+  padding: 13px;
 }
 
-.input-element:-internal-autofill-selected {
-  background-color: $dark;
+.input-submit {
+  background-color: transparent;
+  border: none;
+  color: $light;
+  cursor: pointer;
+  font-size: 37px;
+  margin: 0 0 0 15px;
 }
