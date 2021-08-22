@@ -57,6 +57,8 @@ const app = (function () {
     updateLocalStorage();
   }
 
+  function doesVideoExist(videoInfo) {}
+
   function createPlaylistElement(videoInfo) {
     let playlistItemWrapper = document.createElement("div");
     let videoEl = document.createElement("div");
@@ -89,10 +91,17 @@ const app = (function () {
 
   function createVideoListItem(videoLink) {
     let videoInfo;
+    let videoId;
 
     if (videoLink.includes("youtube")) {
+      videoId = videoLink.slice(videoLink.indexOf("v=") + 2);
+
+      if (videoId.includes("&")) {
+        videoId = videoId.slice(0, videoId.indexOf("&"));
+      }
+
       videoInfo = {
-        id: videoLink.slice(videoLink.indexOf("v=") + 2),
+        id: videoId,
         img: `https://i.ytimg.com/vi_webp/${videoLink.slice(
           videoLink.indexOf("v=") + 2
         )}/sddefault.webp`,
@@ -102,6 +111,9 @@ const app = (function () {
     }
 
     if (videoLink.includes("vimeo")) {
+      if (videoLink.slice(videoLink.indexOf(".com/")).match(/\//g).length > 1) {
+        return "invalid";
+      }
       videoInfo = {
         id: videoLink.slice(videoLink.indexOf(".com/") + 5),
         img: "",
