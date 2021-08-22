@@ -63,6 +63,8 @@ const app = (function () {
     };
 
     updateLocalStorage();
+
+    playlistArea.removeChild(e.currentTarget.parentNode);
   }
 
   function createPlaylistElement(videoInfo) {
@@ -164,11 +166,15 @@ const app = (function () {
     addInput.value = "";
     if (videoListItem === "duplicate") {
       alert("This video is already in your playlist");
+      return;
     }
 
     if (videoListItem === "invalid") {
       alert("Invalid link");
+      return;
     }
+
+    playlistArea.appendChild(videoListItem);
   }
 
   function populatePlaylist() {
@@ -189,7 +195,6 @@ const app = (function () {
   }
 
   addForm.addEventListener("submit", addVideo);
-  events.on("userDataChange", populatePlaylist);
 
   populatePlaylist();
 })();
