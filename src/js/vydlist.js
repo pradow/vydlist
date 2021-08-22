@@ -7,7 +7,7 @@ const app = (function () {
     videosArr: [],
   };
   let isDuplicate = false;
-  let videoPlayingId = "";
+  let videoPlayingInfo = {};
 
   if (!localStorage.hasOwnProperty("vydlistApp")) {
     updateLocalStorage();
@@ -39,6 +39,14 @@ const app = (function () {
     const el = createVideoElement(videoPlayingInfo);
 
     videoArea.innerHTML = el;
+
+    playlistArea.querySelectorAll("[data-site]").forEach((item) => {
+      if (item.dataset.id === videoPlayingInfo.id) {
+        item.classList.add("playing-video");
+      } else {
+        item.classList.remove("playing-video");
+      }
+    });
   }
 
   function deleteItem(e) {
@@ -56,8 +64,6 @@ const app = (function () {
 
     updateLocalStorage();
   }
-
-  function doesVideoExist(videoInfo) {}
 
   function createPlaylistElement(videoInfo) {
     let playlistItemWrapper = document.createElement("div");
