@@ -85,7 +85,14 @@
 }
 
 @media (max-width: 850px) {
-  .playlist-item-wrapper {
+  .video-playing .playlist-area-inner {
+    display: flex;
+    height: auto;
+    position: static;
+  }
+
+  .playlist-item-wrapper,
+  .video-playing .playlist-item-wrapper {
     width: 50%;
   }
 }
