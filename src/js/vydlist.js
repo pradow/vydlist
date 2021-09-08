@@ -4,11 +4,13 @@ const app = (function () {
   const addInput = document.querySelector("#addInput");
   const videoArea = document.querySelector(".jsVideoArea");
   const playlistArea = document.querySelector(".jsPlaylistArea");
+  const widescreenEl = document.querySelector(".js-widescreen");
   let userData = {
     videosArr: [],
   };
   let isDuplicate = false;
   let videoPlayingInfo = {};
+  let isWidescreen = false;
 
   if (!localStorage.hasOwnProperty("vydlistApp")) {
     updateLocalStorage();
@@ -57,6 +59,10 @@ const app = (function () {
     body.classList.remove(...body.classList);
 
     body.classList.add("video-playing", videoPlayingInfo.site);
+
+    if (isWidescreen) {
+      body.classList.add("widescreen");
+    }
   }
 
   function deleteItem(e) {
@@ -212,7 +218,14 @@ const app = (function () {
     playlistArea.appendChild(htmlToAppend);
   }
 
+  function toggleWidescreenMode() {
+    body.classList.toggle("widescreen");
+    isWidescreen = !isWidescreen;
+  }
+
   addForm.addEventListener("submit", addVideo);
+
+  widescreenEl.addEventListener("click", toggleWidescreenMode);
 
   populatePlaylist();
 })();
