@@ -5,6 +5,7 @@ const app = (function () {
   const videoArea = document.querySelector(".jsVideoArea");
   const playlistArea = document.querySelector(".jsPlaylistArea");
   const widescreenEl = document.querySelector(".js-widescreen");
+  const homeSidebarEl = document.querySelector(".js-home");
   let userData = {
     videosArr: [],
   };
@@ -48,7 +49,7 @@ const app = (function () {
 
     videoArea.innerHTML = el;
 
-    playlistArea.querySelectorAll("[data-site]").forEach((item) => {
+    playlistArea.querySelectorAll(".playlist-item-wrapper").forEach((item) => {
       if (item.dataset.id === videoPlayingInfo.id) {
         item.classList.add("playing-video");
       } else {
@@ -223,9 +224,20 @@ const app = (function () {
     isWidescreen = !isWidescreen;
   }
 
+  function toggleHomeState() {
+    const playlistItems = document.querySelectorAll(".playlist-item-wrapper");
+    body.classList.remove(...body.classList);
+
+    playlistItems.forEach((item) => {
+      item.classList.remove("playing-video");
+    });
+  }
+
   addForm.addEventListener("submit", addVideo);
 
   widescreenEl.addEventListener("click", toggleWidescreenMode);
+
+  homeSidebarEl.addEventListener("click", toggleHomeState);
 
   populatePlaylist();
 })();
