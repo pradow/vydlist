@@ -52,3 +52,9 @@
   display: inline-block;
   color: $red-1;
 }
+
+@media (max-width: 850px) {
+  .js-widescreen {
+    display: none;
+  }
+}
